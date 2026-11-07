@@ -43,6 +43,13 @@ def test_admin_auth_and_protected_catalog(client):
     headers=admin_headers(client)
     assert client.post("/api/countries",json={"name":"Iran"},headers=headers).status_code==201
 
+def test_swagger_oauth2_authorize_flow(client):
+    response=client.post("/api/auth/admin/token",data={"username":"admin@test.com","password":"TestPass123!"})
+    assert response.status_code==200
+    assert response.json()["token_type"]=="bearer"
+    headers={"Authorization":f"Bearer {response.json()['access_token']}"}
+    assert client.post("/api/countries",json={"name":"Iran"},headers=headers).status_code==201
+
 def test_accommodation_reservation_payment_rating_and_favorite_flow(client):
     headers,city,guest,amenity=setup_catalog(client)
     acc=client.post("/api/accommodations",headers=headers,json={"city_id":city["city_id"],"title":"Garden Suite","address":"Tehran","type":"suite","capacity":3,"amenity_ids":[amenity["amenity_id"]],"images":[{"image_url":"https://example.com/room.jpg"}],"rules":[{"title":"No smoking","description":"Smoking is not allowed"}]}).json()

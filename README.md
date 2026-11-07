@@ -39,13 +39,13 @@ uvicorn app.main:app --reload
 
 ## احراز هویت
 
-در Swagger ابتدا `POST /api/auth/admin/login` را با ایمیل و رمز ادمین اجرا کنید. مقدار `access_token` را کپی کرده و دکمه **Authorize** را بزنید؛ توکن را به شکل `Bearer <token>` وارد کنید. مسیرهای نوشتن اطلاعات پایه و CRUD اقامتگاه به توکن ادمین نیاز دارند.
+برای ورود مستقیم از پنجره **Authorize** در Swagger، ایمیل ادمین را در فیلد `username` و رمز ادمین را در فیلد `password` وارد کنید؛ فیلدهای `client_id` و `client_secret` خالی بمانند. این پنجره از مسیر OAuth2 یعنی `POST /api/auth/admin/token` استفاده می‌کند. همچنین مسیر `POST /api/auth/admin/login` برای ورود معمولی با بدنه JSON شامل `email` و `password` حفظ شده است. مسیرهای نوشتن اطلاعات پایه و CRUD اقامتگاه به توکن ادمین نیاز دارند.
 
 ## مسیرهای اصلی API
 
 | حوزه | متد و مسیر | توضیح |
 |---|---|---|
-| Auth | `POST /api/auth/admin/login` | ورود ادمین و دریافت JWT |
+| Auth | `POST /api/auth/admin/login`, `POST /api/auth/admin/token` | ورود ادمین با JSON یا فرم OAuth2 و دریافت JWT |
 | Guests | `POST /api/guests`, `GET /api/guests/{id}` | ثبت و مشاهده مهمان |
 | Locations | `GET/POST /api/countries`, `GET/POST /api/cities` | کشورها و شهرها؛ POST مخصوص ادمین |
 | Amenities | `GET/POST /api/amenities` | کاتالوگ مشترک امکانات |

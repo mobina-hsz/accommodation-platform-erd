@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from datetime import date, datetime
 from decimal import Decimal
 from fastapi import Depends, FastAPI, HTTPException, Query, Response, status
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, joinedload
@@ -59,6 +60,14 @@ def health(db: Session = Depends(get_db)):
 def admin_login(data: s.AdminLogin, db: Session = Depends(get_db)):
     admin = db.query(m.Admin).filter(m.Admin.email == data.email).first()
     if not admin or not verify_password(data.password, admin.password_hash):
+        raise HTTPException(status_code=401, detail="Email or password is incorrect")
+    return {"access_token": create_access_token(admin.email), "token_type": "bearer"}
+
+@app.post(api + "/auth/admin/token", response_model=s.Token, tags=["Authentication"])
+def admin_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    """OAuth2 form endpoint used by Swagger's Authorize dialog."""
+    admin = db.query(m.Admin).filter(m.Admin.email == form_data.username).first()
+    if not admin or not verify_password(form_data.password, admin.password_hash):
         raise HTTPException(status_code=401, detail="Email or password is incorrect")
     return {"access_token": create_access_token(admin.email), "token_type": "bearer"}
 
