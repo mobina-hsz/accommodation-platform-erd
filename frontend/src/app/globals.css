@@ -783,3 +783,34 @@ button, a { -webkit-tap-highlight-color: transparent; }
     @apply font-sans;
   }
 }
+
+/* خانه‌راه: quiet motion, tactile cards, and an editorial travel hero */
+.hero-scene { isolation: isolate; }
+.hero-photo { background-image: url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=90"); background-size: cover; background-position: center 52%; transform: scale(1.035); animation: hero-drift 22s ease-in-out infinite alternate; }
+.hero-shade { background: linear-gradient(270deg, rgba(13,42,35,.97) 0%, rgba(13,42,35,.88) 34%, rgba(13,42,35,.57) 63%, rgba(13,42,35,.22) 100%); }
+.hero-orbit { position:absolute; border:1px solid rgba(255,255,255,.12); border-radius:50%; pointer-events:none; }
+.orbit-one { width:640px;height:640px;left:-210px;top:-130px;animation:orbit-breathe 12s ease-in-out infinite; }
+.orbit-two { width:470px;height:470px;left:-125px;top:-45px;border-color:rgba(232,201,149,.2);animation:orbit-breathe 9s ease-in-out infinite reverse; }
+.hero-copy { animation: rise-in .75s cubic-bezier(.2,.7,.2,1) both; }
+.search-panel { animation: rise-in .9s .12s cubic-bezier(.2,.7,.2,1) both; }
+.search-field { display:grid; gap:7px; border:1px solid #e9e8e1; border-radius:15px; background:#fbfaf7; padding:11px 13px; transition:border-color .2s, box-shadow .2s; }
+.search-field:focus-within { border-color:#7ba398; box-shadow:0 0 0 3px rgba(22,78,67,.08); }
+.search-field > span { display:flex; align-items:center; gap:6px; color:#788179; font-size:11px; font-weight:700; }
+.search-field select,.search-field input { width:100%; min-width:0; border:0; outline:0; background:transparent; color:#263b32; font-size:13px; }
+.hero-bottom-line { position:absolute;bottom:0;inset-inline:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,201,149,.65),transparent); }
+.stay-grid > * { animation: card-enter .55s cubic-bezier(.2,.7,.2,1) both; }
+.stay-grid > *:nth-child(2) { animation-delay:.05s; }
+.stay-grid > *:nth-child(3) { animation-delay:.1s; }
+.stay-grid > *:nth-child(4) { animation-delay:.15s; }
+.stay-grid > *:nth-child(5) { animation-delay:.2s; }
+.stay-grid > *:nth-child(6) { animation-delay:.25s; }
+.stay-image { background-color:#e8e9e2; }
+.brand-mark { transition:transform .35s cubic-bezier(.2,.7,.2,1); }
+.group:hover .brand-mark { transform:rotate(-5deg) scale(1.04); }
+.feature-item { animation: rise-in .7s both; }
+@keyframes rise-in { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes card-enter { from { opacity:0; transform:translateY(14px) scale(.99); } to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes hero-drift { from { transform:scale(1.035) translate3d(0,0,0); } to { transform:scale(1.09) translate3d(1.2%, -1%, 0); } }
+@keyframes orbit-breathe { 0%,100% { transform:scale(1);opacity:.55; } 50% { transform:scale(1.035);opacity:1; } }
+@media (max-width:767px) { .hero-shade { background:linear-gradient(180deg,rgba(13,42,35,.88),rgba(13,42,35,.92)); } .hero-photo { background-position:center; } .orbit-one { width:420px;height:420px;left:-190px;top:-70px; } .orbit-two { width:310px;height:310px;left:-135px;top:-15px; } }
+@media (prefers-reduced-motion:reduce) { .hero-photo,.hero-copy,.search-panel,.hero-orbit,.stay-grid > *, .feature-item { animation:none !important; } }
